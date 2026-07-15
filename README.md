@@ -1,7 +1,7 @@
 # Smart Ticket Router
 
 AI-powered Smart Ticket Router for Oracle ERP Support.
-This project was built as a part of the Calfus Mission assignment.
+**This project was built as a part of the Calfus Mission assignment.**
 
 ## Project Overview
 
@@ -163,5 +163,5 @@ Click **Analyze Ticket** to view the AI prediction and routing result.
 
 ## Author
 
-Dhiksha M
+**Dhiksha M**
  
