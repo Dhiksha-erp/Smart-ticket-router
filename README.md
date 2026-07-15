@@ -1,7 +1,7 @@
 # Smart Ticket Router
 
 AI-powered Smart Ticket Router for Oracle ERP Support.
-**This project was built as a part of the Calfus Mission assignment.**
+This project was built as a part of the Calfus Mission assignment.
 
 ## Project Overview
 
@@ -63,7 +63,7 @@ smart-ticket-router/
 │   └── ...
 └── README.md
 ```
-### Clone the repository
+**### Clone the repository**
 
 ```bash
 
