@@ -63,7 +63,7 @@ smart-ticket-router/
 │   └── ...
 └── README.md
 ```
-**### Clone the repository**
+### Clone the repository
 
 ```bash
 
