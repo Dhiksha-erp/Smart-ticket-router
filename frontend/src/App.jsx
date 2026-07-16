@@ -334,9 +334,9 @@ await loadHistory();
 </h1>
 <div className="title-line"></div>
 <p className="hero-subtitle">
-  No ticket waits. No ticket wanders.
+  "No ticket waits. No ticket wanders.
 <br />
-Just instantly matched to the right hands.
+Just instantly matched to the right hands."
 </p>
 </div>
 </header>

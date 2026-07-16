@@ -106,13 +106,8 @@ function SideBar({ activePage, setActivePage }) {
 </div>
 <div className="ai-card">
 
-<h4>AI Powered</h4>
-<p>
-
-          Smart Routing for
-
-          Oracle ERP Support
-</p>
+<h4>Support Intelligence</h4>
+<p>Analyze • Prioritize • Conclude</p>
 </div>
 </aside>
 

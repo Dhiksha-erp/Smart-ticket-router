@@ -159,12 +159,9 @@ function TicketForm({
         Upload CSV
 </label>
 <div className="upload-box">
-<h4>Bulk Ticket Upload</h4>
 <p>
 
-          Upload a CSV file to analyze multiple ERP support
-
-          tickets using AI.
+        Import a CSV file to classify, prioritize, and route multiple support tickets at once.
 </p>
 <input
 
