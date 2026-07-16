@@ -28,9 +28,9 @@ async def analyze(data: dict):
            result = json.loads(result)
        except:
            result = {
-               "category": "IT Support",
+               "category": "Customer Support",
                "priority": "Medium",
-               "assigned_team": "IT Support Team",
+               "assigned_team": "Customer Support Team",
                "reason": result
            }
    ticket = {
@@ -56,9 +56,9 @@ async def upload_csv(file: UploadFile = File(...)):
                result = json.loads(result)
            except:
                result = {
-                   "category": "IT Support",
+                   "category": "Customer Support",
                    "priority": "Medium",
-                   "assigned_team": "IT Support Team",
+                   "assigned_team": "Customer Support Team",
                    "reason": result
                }
        ticket = {

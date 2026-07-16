@@ -1,116 +1,199 @@
+import os
+
+import json
+from dotenv import load_dotenv
+
+from openai import OpenAI
+
+load_dotenv()
+
+client = OpenAI(
+
+    api_key=os.getenv("OPENAI_API_KEY")
+
+)
+
+
 def analyze_ticket(ticket):
 
-    text = ticket.lower()
+    prompt = f"""
 
-    result = {
+You are an Oracle Fusion ERP Smart Ticket Router.
 
-        "category": "IT Support",
+Analyze the support ticket and return ONLY valid JSON.
 
-        "priority": "Low",
+Categories:
 
-        "assigned_team": "IT Support Team",
+- Finance
 
-        "reason": "General ERP support request.",
+- Procurement
 
-        "sentiment": "Neutral"
+- HR
 
-    }
+- IT Support
 
-    if "invoice" in text or "supplier" in text:
+- Analytics
 
-        result = {
+- Customer Support
 
-            "category": "Finance",
+Return ONLY this JSON format:
 
-            "priority": "High",
+{{
 
-            "assigned_team": "Accounts Payable Team",
+  "category": "",
 
-            "reason": "Supplier invoice creation issue.",
+  "priority": "",
 
-            "sentiment": "Negative"
+  "assigned_team": "",
 
-        }
+  "reason": "",
 
-    elif "payment" in text:
+  "sentiment": ""
 
-        result = {
+}}
 
-            "category": "Finance",
+Priority must be one of:
 
-            "priority": "High",
+- High
 
-            "assigned_team": "Payments Team",
+- Medium
 
-            "reason": "Payment processing failure.",
+- Low
 
-            "sentiment": "Negative"
+Assigned Teams:
 
-        }
+Finance ->
 
-    elif "purchase order" in text or "approval" in text:
+- Accounts Payable Team
 
-        result = {
+- Accounts Receivable Team
 
-            "category": "Procurement",
+- General Ledger Team
 
-            "priority": "Medium",
+- Payments Team
 
-            "assigned_team": "Procurement Team",
+Procurement ->
 
-            "reason": "Purchase order approval workflow issue.",
+- Procurement Team
 
-            "sentiment": "Neutral"
+HR ->
 
-        }
+- HR Support Team
 
-    elif "login" in text or "password" in text:
+IT Support ->
 
-        result = {
+- IT Helpdesk
 
-            "category": "IT Support",
+Analytics ->
 
-            "priority": "High",
+- BI Team
 
-            "assigned_team": "IT Helpdesk",
+Customer Support ->
 
-            "reason": "Authentication or login issue.",
+- Customer Support Team
 
-            "sentiment": "Negative"
+Understand the user's intent naturally.
 
-        }
+Examples:
 
-    elif "employee" in text or "hr" in text:
+"I want leave tomorrow"
 
-        result = {
+-> HR
 
-            "category": "HR",
+"Supplier invoice failed"
 
-            "priority": "Medium",
+-> Finance
 
-            "assigned_team": "HR Support",
+"My payment is pending"
 
-            "reason": "Employee self-service issue.",
+-> Finance
 
-            "sentiment": "Neutral"
+"PO approval stuck"
 
-        }
+-> Procurement
 
-    elif "report" in text or "dashboard" in text:
+"Unable to login Oracle Fusion"
 
-        result = {
+-> IT Support
 
-            "category": "Analytics",
+"Dashboard report not loading"
 
-            "priority": "Low",
+-> Analytics
 
-            "assigned_team": "BI Team",
+Now classify this ticket:
 
-            "reason": "Reporting or dashboard issue.",
+{ticket}
 
-            "sentiment": "Neutral"
+"""
+    try:
 
-        }
+        response = client.chat.completions.create(
 
-    return result
- 
+            model="gpt-4.1-mini",
+
+            messages=[
+
+                {
+
+                    "role": "system",
+
+                    "content": (
+
+                        "You are an Oracle Fusion ERP ticket routing assistant. "
+
+                        "Always return only valid JSON."
+
+                    ),
+
+                },
+
+                {
+
+                    "role": "user",
+
+                    "content": prompt,
+
+                },
+
+            ],
+
+            temperature=0,
+
+        )
+
+        result = response.choices[0].message.content.strip()
+
+        if result.startswith("```json"):
+
+            result = (
+
+                result.replace("```json", "")
+
+                .replace("```", "")
+
+                .strip()
+
+            )
+
+        elif result.startswith("```"):
+
+            result = (
+
+                result.replace("```", "")
+
+                .strip()
+
+            )
+
+        json.loads(result)
+
+        return result
+    except Exception as e:
+       fallback = {
+           "category": "Customer Support",
+           "priority": "Medium",
+           "assigned_team": "Customer Support Team",
+           "reason": f"AI unavailable: {str(e)}",
+           "sentiment": "Neutral"
+       }
+       return json.dumps(fallback)
