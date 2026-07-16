@@ -140,11 +140,12 @@ Click **Analyze Ticket** to view the AI prediction and routing result.
 
 ## Screenshots
 
-<img width="1512" height="982" alt="Screenshot 2026-07-15 at 10 06 18 PM" src="https://github.com/user-attachments/assets/f9ed6a55-6949-475e-903c-8e4272554d6c" />
+
 
 <img width="1512" height="982" alt="Screenshot 2026-07-15 at 10 05 41 PM" src="https://github.com/user-attachments/assets/cc94012b-9595-4150-8028-a659599843fd" />
 
-<img width="1512" height="982" alt="Screenshot 2026-07-15 at 10 05 33 PM" src="https://github.com/user-attachments/assets/0a86e62f-0c7e-4876-a613-cf6f87c45ff9" />
+<img width="1512" height="982" alt="Screenshot 2026-07-16 at 11 41 38 AM" src="https://github.com/user-attachments/assets/a8d0deb8-99d5-4f60-9f13-4c833a50efaf" />
+
 
 
 
