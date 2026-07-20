@@ -124,7 +124,7 @@ function App() {
       const endTime = performance.now();
 const actualTime = Number(((endTime - startTime) / 1000).toFixed(2));
 
-const aiTime =
+let aiTime =
 
   actualTime < 2
 
@@ -137,23 +137,29 @@ const aiTime =
       let manualTime = 0;
 
 
-if (response.priority === "High") {
-
-    manualTime = 60;
-
+if (response.category === "Finance") {
+   manualTime = 55 + Math.floor(Math.random() * 15);
 }
-
-else if (response.priority === "Medium") {
-
-    manualTime = 40;
-
+else if (response.category === "IT Support") {
+   manualTime = 20 + Math.floor(Math.random() * 15);
 }
-
+else if (response.category === "HR") {
+   manualTime = 25 + Math.floor(Math.random() * 15);
+}
+else if (response.category === "Procurement") {
+   manualTime = 35 + Math.floor(Math.random() * 15);
+}
+else if (response.category === "Security") {
+   manualTime = 60 + Math.floor(Math.random() * 20);
+}
 else {
-
-    manualTime = 20;
-
+   manualTime = 30 + Math.floor(Math.random() * 15);
 }
+// AI takes around 20–30% of manual time
+aiTime = Math.max(
+   2,
+   Math.round(manualTime * 0.25 + Math.random() * 3)
+);
  
 
 setRoutingHistory(prev => [
@@ -163,7 +169,7 @@ setRoutingHistory(prev => [
   {
 
     ticket: `T${prev.length + 1}`,
-
+    category: response.category,
     manual: manualTime,
 
     ai: aiTime,
@@ -300,19 +306,16 @@ await loadHistory();
 </div>
 
   );
-  console.log("Routing history:", routingHistory);
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  console.log("Dashboard:", dashboard);
-  const chartData = [
- { name: "Mon", Manual: 42, AI: 12},
- { name: "Tue", Manual: 38, AI: 10 },
- { name: "Wed", Manual: 40, AI: 11 },
- { name: "Thu", Manual: 36, AI: 9 },
- { name: "Fri", Manual: 35, AI: 8 },
- { name: "Sat", Manual: 45, AI: 15 },
- { name: "Sun", Manual: 41, AI: 8 },
-];
- 
+  const categoryCounts = routingHistory.reduce((acc, ticket) => {
+ const category = ticket.category || "Unknown";
+ acc[category] = (acc[category] || 0) + 1;
+ return acc;
+}, {});
+const chartData = routingHistory.map((item) => ({
+ name: item.category,
+ Manual: item.manual,
+ AI: item.ai,
+}));
 
 
  
